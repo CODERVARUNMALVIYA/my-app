@@ -1,0 +1,24 @@
+.Header-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+.Header-wrapper ul{
+    display: flex;
+    
+
+}
+.Header-wrapper ul li{
+    list-style-type: none;
+    padding: 5px;
+}
+.Header-wrapper ul li a{
+    text-decoration: none;
+}
+.Footer-wrapper{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    background-color: #fff;
+}

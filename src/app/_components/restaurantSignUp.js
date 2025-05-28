@@ -1,3 +1,5 @@
+'use client'
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const RestaurantSignUp=()=>{
@@ -8,16 +10,21 @@ const RestaurantSignUp=()=>{
   const [city, setcity]=useState('');
   const [address, setaddress]=useState('');
   const [Mobile, setMobile]=useState('');
+  const router = useRouter();
 
   const handleSignUp= async()=>{
     console.log(email,password,ConformPassword,restauranName,city,address,Mobile);
-    let result= await fetch("http://localhost:3000/api/restaurant",{
+    let response= await fetch("http://localhost:3000/api/restaurant",{
       method:"POST",
       body:JSON.stringify({email,password,restauranName,city,address,Mobile})
    })
-   result =await result.json();
-  if(result.success){
-    alert("Restaurant Resistered successfully")
+   response =await response.json();
+  if(response.success){
+    console.log(response);
+    const {result} =response
+    delete result.password
+    localStorage.setItem("restaurantUser",JSON.stringify(result));
+    router.push("/restarunt/dashboard")
   }    
   }
     return(

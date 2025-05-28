@@ -1,6 +1,28 @@
+'use client'
 import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const RestaurantHeader=()=>{
+    const [details, setdetails]=useState('');
+    const router=useRouter();
+    const pathName=usePathname();
+    useEffect(()=>{
+        let data =localStorage.getItem("restaurantUser");
+        if(!data && pathName=="/restarunt/dashboard"){
+         router.push("/restarunt")
+        }
+        else if(data && pathName=="/restarunt"){
+            router.push("/restarunt/dashboard")
+        }
+        else{
+            setdetails(JSON.parse(data));
+        }
+    }, [])
+    const Logout=()=>{
+        localStorage.removeItem("restaurantUser")
+        router.push("/restarunt")
+    }
     return(
         <div className="Header-wrapper">
             <div className="Logo">
@@ -11,12 +33,24 @@ const RestaurantHeader=()=>{
                 <li>
                     <Link href="/">Home</Link>
                 </li>
-                  <li>
+                {
+                    details && details.name?
+                <li>
                     <Link href="/">Login/SignUp</Link>
                 </li>
-                  <li>
+                :
+               <>
+               
+                <li>
                     <Link href="/">Profile</Link>
                 </li>
+                <li>
+                <button onClick={Logout}>Logout</button>
+               </li></>
+                
+                }
+                
+            
             </ul>
         </div>
     )

@@ -28,3 +28,9 @@
     font-size: 20px;
     background-color: #fff;
 }
+.input-error{
+    position: absolute;
+    padding: 8px;
+    color: rgb(202, 23, 23);
+    font-size: 16px;
+}

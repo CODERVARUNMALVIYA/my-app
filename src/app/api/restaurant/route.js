@@ -13,9 +13,17 @@ const data = await restaurantSchema.find()
 }
 export async function POST(request) {
     let payload= await request.json();
+   
     await mongoose.connect(connectionStr,{useNewUrlParser:true})
+    let result;
+    
+    if(payload.login){
+        result= await restaurantSchema.findOne({email:payload.email, password:payload.password})
+    }else{
     const restaurant = new restaurantSchema(payload);
-    const result=await restaurant.save();
-    console.log(payload);
+    result=await restaurant.save();
+
+    }
     return NextResponse.json({result, success:true});
+
 }

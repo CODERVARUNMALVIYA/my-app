@@ -16,14 +16,20 @@ export async function POST(request) {
    
     await mongoose.connect(connectionStr,{useNewUrlParser:true})
     let result;
+    let success = false;
     
     if(payload.login){
         result= await restaurantSchema.findOne({email:payload.email, password:payload.password})
+        if(result){
+            success= true;
+        }
     }else{
     const restaurant = new restaurantSchema(payload);
     result=await restaurant.save();
-
+     if(result){
+            success= true;
+        }
     }
-    return NextResponse.json({result, success:true});
+    return NextResponse.json({result, success});
 
 }
